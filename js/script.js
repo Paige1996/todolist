@@ -13,16 +13,36 @@ let template = templateElement.innerHTML
 
 
 //2. Write a function to implement the behavior 2. write function
+
+function saveTask(name, isCompleted) {
+    localStorage.setItem(name, isCompleted)
+}
+
+function renderTasks() {
+    for (let i = 0; i < localStorage.length; i++) {
+        let taskName = localStorage.key(i)
+        let isCompleted = localStorage.getItem(taskName) == "true"
+        let templateElement = document.getElementById("list-item-template")
+
+        if (!isCompleted) {
+            todoListContainer.insertAdjacentHTML("afterbegin", taskHTML);
+        }
+    }
+}
+
 function onAddTaskClicked(event) {
     let taskName = newTaskInput.value;
     newTaskInput.value = "";
 
     let taskHTML = template.replace("<!-- Task_Name -->", taskName)
     todoListContainer.insertAdjacentHTML("afterbegin", taskHTML);
+
+    saveTask(taskName, false) //isCompleted == false, 
 }
 
 function onTodoListClicked(event) {
     let targetElement = event.target;
+
 
     while (!targetElement.classList.contains("task")) {
         targetElement = targetElement.parentElement
@@ -34,6 +54,12 @@ function onTodoListClicked(event) {
     else {
         targetElement.classList.remove("completed");
     }
+
+    let taskNameElement = targetElement.querySelector(".task-name")
+    let taskName = taskNameElement.innerHTML //span을 
+
+    saveTask(taskName, checkbox.checked);
+
 }
 
 function showActiveTasks() {
@@ -68,6 +94,7 @@ function showComTasks() {
     }
 }
 
+
 //3. add event listener. link element, function and name
 addTaskButton.addEventListener('click', onAddTaskClicked);
 todoListContainer.addEventListener('click', onTodoListClicked);
@@ -78,3 +105,4 @@ showActiveButton.addEventListener('click', showActiveTasks)
 showAllButton.addEventListener('click', showAllTasks)
 
 showComButton.addEventListener('click', showComTasks)
+renderTasks()
