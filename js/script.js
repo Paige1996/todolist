@@ -22,8 +22,7 @@ function renderTasks() {
     for (let i = 0; i < localStorage.length; i++) {
         let taskName = localStorage.key(i)
         let isCompleted = localStorage.getItem(taskName) == "true"
-        let templateElement = document.getElementById("list-item-template")
-
+        let taskHTML = template.replace("<!-- Task_Name -->", taskName)
         if (!isCompleted) {
             todoListContainer.insertAdjacentHTML("afterbegin", taskHTML);
         }
@@ -48,6 +47,8 @@ function onTodoListClicked(event) {
         targetElement = targetElement.parentElement
     }
     let checkbox = targetElement.querySelector(".checkbox");
+
+
     if (checkbox.checked) {
         targetElement.classList.add("completed");
     }
@@ -83,6 +84,7 @@ function showAllTasks() {
 }
 
 function showComTasks() {
+    /*
     let tasks = document.getElementsByClassName("task")
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].classList.contains("completed")) {
@@ -91,8 +93,17 @@ function showComTasks() {
         else {
             tasks[i].style.display = "none" //to show an element, set show all. block을 모두 보여줌
         }
+    } 
+    */
+    for (let i = 0; i < localStorage.length; i++) {
+        let taskName = localStorage.key(i)
+        let isCompleted = localStorage.getItem(taskName) == "true"
+        let taskHTML = template.replace("<!-- Task_Name -->", taskName)
+        todoListContainer.insertAdjacentHTML("afterbegin", taskHTML);
     }
 }
+
+
 
 
 //3. add event listener. link element, function and name
