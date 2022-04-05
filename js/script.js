@@ -6,6 +6,7 @@ let newTaskInput = document.getElementById("task-input")
 let todoListContainer = document.getElementById("todo-list")
 let showActiveButton = document.getElementById("show-active")
 let showAllButton = document.getElementById("show-all")
+let showComButton = document.getElementById("show-completed")
 
 let templateElement = document.getElementById("list-item-template")
 let template = templateElement.innerHTML
@@ -55,6 +56,18 @@ function showAllTasks() {
     }
 }
 
+function showComTasks() {
+    let tasks = document.getElementsByClassName("task")
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].classList.contains("completed")) {
+            tasks[i].style.display = "block"
+        }
+        else {
+            tasks[i].style.display = "none" //to show an element, set show all. block을 모두 보여줌
+        }
+    }
+}
+
 //3. add event listener. link element, function and name
 addTaskButton.addEventListener('click', onAddTaskClicked);
 todoListContainer.addEventListener('click', onTodoListClicked);
@@ -63,3 +76,5 @@ showActiveButton.addEventListener('click', showActiveTasks)
 
 
 showAllButton.addEventListener('click', showAllTasks)
+
+showComButton.addEventListener('click', showComTasks)
